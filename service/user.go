@@ -17,8 +17,8 @@ type UserService interface {
 	GetUserByEmail(email string) (entity.User, error)
 	GetUserByID(userID uint64) (entity.User, error)
 	DeleteUser(userID uint64) error
-	UpdateUserNama(userID uint64, nama string) (entity.User, error)
-	UpdateUserPassword(userID uint64, password string) (entity.User, error)
+	UpdateUserNama(userID uint64, nama string) error
+	UpdateUserPassword(userID uint64, password string) error
 	VerifyPassword(userID uint64, password string) error
 }
 
@@ -81,11 +81,11 @@ func (us *userService) DeleteUser(userID uint64) error {
 	return us.userRepository.DeleteUser(userID)
 }
 
-func (us *userService) UpdateUserNama(userID uint64, nama string) (entity.User, error) {
+func (us *userService) UpdateUserNama(userID uint64, nama string) error {
 	return us.userRepository.UpdateUserNama(userID, nama)
 }
 
-func (us *userService) UpdateUserPassword(userID uint64, password string) (entity.User, error) {
+func (us *userService) UpdateUserPassword(userID uint64, password string) error {
 	return us.userRepository.UpdateUserPassword(userID, password)
 }
 

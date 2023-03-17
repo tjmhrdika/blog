@@ -13,7 +13,7 @@ type BlogService interface {
 	CreateBlog(userID uint64, blogDTO dto.BlogCreate) (entity.Blog, error)
 	GetBlogByID(userID uint64) (entity.Blog, error)
 	VerifyBlog(blogID uint64, userID uint64) error
-	UpdateBlog(blogID uint64, blogDTO dto.BlogUpdate) (entity.Blog, error)
+	UpdateBlog(blogID uint64, blogDTO dto.BlogUpdate) error
 	DeleteBlog(blogID uint64) error
 }
 
@@ -51,10 +51,10 @@ func (bs *blogService) VerifyBlog(blogID uint64, userID uint64) error {
 	return nil
 }
 
-func (bs *blogService) UpdateBlog(blogID uint64, blogDTO dto.BlogUpdate) (entity.Blog, error) {
+func (bs *blogService) UpdateBlog(blogID uint64, blogDTO dto.BlogUpdate) error {
 	blog := entity.Blog{}
 	if err := copier.Copy(&blog, &blogDTO); err != nil {
-		return entity.Blog{}, err
+		return err
 	}
 	blog.ID = blogID
 	return bs.blogRepository.UpdateBlog(blog)

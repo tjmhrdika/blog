@@ -10,7 +10,7 @@ type BlogRepository interface {
 	CreateBlog(blog entity.Blog) (entity.Blog, error)
 	GetBlogByID(blogID uint64) (entity.Blog, error)
 	GetUserIDByBlogID(blogID uint64) (uint64, error)
-	UpdateBlog(blog entity.Blog) (entity.Blog, error)
+	UpdateBlog(blog entity.Blog) error
 	DeleteBlog(blogID uint64) error
 }
 
@@ -47,11 +47,11 @@ func (br *blogRepository) GetUserIDByBlogID(blogID uint64) (uint64, error) {
 	return blog.UserID, nil
 }
 
-func (br *blogRepository) UpdateBlog(blog entity.Blog) (entity.Blog, error) {
+func (br *blogRepository) UpdateBlog(blog entity.Blog) error {
 	if err := br.DB.Updates(&blog).Error; err != nil {
-		return entity.Blog{}, err
+		return err
 	}
-	return blog, nil
+	return nil
 }
 
 func (br *blogRepository) DeleteBlog(blogID uint64) error {

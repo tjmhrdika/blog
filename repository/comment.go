@@ -9,7 +9,7 @@ import (
 type CommentRepository interface {
 	CreateComment(comment entity.Comment) (entity.Comment, error)
 	GetUserIDByCommentID(commentID uint64) (uint64, error)
-	UpdateComment(comment entity.Comment) (entity.Comment, error)
+	UpdateComment(comment entity.Comment) error
 	DeleteComment(commentID uint64) error
 }
 
@@ -38,11 +38,11 @@ func (cr *commentRepository) GetUserIDByCommentID(commentID uint64) (uint64, err
 	return comment.UserID, nil
 }
 
-func (cr *commentRepository) UpdateComment(comment entity.Comment) (entity.Comment, error) {
+func (cr *commentRepository) UpdateComment(comment entity.Comment) error {
 	if err := cr.DB.Updates(&comment).Error; err != nil {
-		return entity.Comment{}, err
+		return err
 	}
-	return comment, nil
+	return nil
 }
 
 func (cr *commentRepository) DeleteComment(commentID uint64) error {

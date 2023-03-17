@@ -9,7 +9,7 @@ import (
 type CommentService interface {
 	CreateComment(text string, userID uint64, blogID uint64) (entity.Comment, error)
 	VerifyComment(commentID uint64, userID uint64) error
-	UpdateComment(commentID uint64, text string) (entity.Comment, error)
+	UpdateComment(commentID uint64, text string) error
 	DeleteComment(commentID uint64) error
 }
 
@@ -44,7 +44,7 @@ func (cs *commentService) VerifyComment(commentID uint64, userID uint64) error {
 	return nil
 }
 
-func (cs *commentService) UpdateComment(commentID uint64, text string) (entity.Comment, error) {
+func (cs *commentService) UpdateComment(commentID uint64, text string) error {
 	var comment = entity.Comment{
 		ID:   commentID,
 		Text: text,

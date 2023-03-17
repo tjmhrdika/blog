@@ -137,14 +137,13 @@ func (uc *userController) UpdateUserNama(ctx *gin.Context) {
 		return
 	}
 
-	user, err := uc.userService.UpdateUserNama(userID, nama)
-	if err != nil {
+	if err := uc.userService.UpdateUserNama(userID, nama); err != nil {
 		res := utils.BuildResponseFailed("Gagal Mengupdate Nama User", err)
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, res)
 		return
 	}
 
-	res := utils.BuildResponseSuccess("Berhasil Mengupdate Nama User", user)
+	res := utils.BuildResponseSuccess("Berhasil Mengupdate Nama User", nama)
 	ctx.JSON(http.StatusOK, res)
 }
 
@@ -172,13 +171,12 @@ func (uc *userController) UpdateUserPassword(ctx *gin.Context) {
 		return
 	}
 
-	user, err := uc.userService.UpdateUserPassword(userID, password.PasswordBaru)
-	if err != nil {
+	if err := uc.userService.UpdateUserPassword(userID, password.PasswordBaru); err != nil {
 		res := utils.BuildResponseFailed("Gagal Mengupdate Password User", err)
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, res)
 		return
 	}
 
-	res := utils.BuildResponseSuccess("Berhasil Mengupdate Password User", user)
+	res := utils.BuildResponseSuccess("Berhasil Mengupdate Password User", password.PasswordBaru)
 	ctx.JSON(http.StatusOK, res)
 }

@@ -89,14 +89,13 @@ func (cc *commentController) UpdateComment(ctx *gin.Context) {
 		return
 	}
 
-	comment, err := cc.commentService.UpdateComment(commentID, text)
-	if err != nil {
+	if err := cc.commentService.UpdateComment(commentID, text); err != nil {
 		res := utils.BuildResponseFailed("Gagal Mengupdate Comment", err)
 		ctx.JSON(http.StatusBadRequest, res)
 		return
 	}
 
-	res := utils.BuildResponseSuccess("Berhasil Mengupdate Comment", comment)
+	res := utils.BuildResponseSuccess("Berhasil Mengupdate Comment", text)
 	ctx.JSON(http.StatusOK, res)
 }
 

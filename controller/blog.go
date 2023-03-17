@@ -103,14 +103,13 @@ func (bc *blogController) UpdateBlog(ctx *gin.Context) {
 		return
 	}
 
-	blog, err := bc.blogService.UpdateBlog(blogID, blogDTO)
-	if err != nil {
+	if err := bc.blogService.UpdateBlog(blogID, blogDTO); err != nil {
 		res := utils.BuildResponseFailed("Gagal Mengupdate Blog", err)
 		ctx.JSON(http.StatusBadRequest, res)
 		return
 	}
 
-	res := utils.BuildResponseSuccess("Berhasil Mengupdate Blog", blog)
+	res := utils.BuildResponseSuccess("Berhasil Mengupdate Blog", blogDTO)
 	ctx.JSON(http.StatusOK, res)
 }
 

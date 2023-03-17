@@ -12,8 +12,8 @@ type UserRepository interface {
 	GetUserByID(userID uint64) (entity.User, error)
 	GetPasswordByID(userID uint64) (string, error)
 	DeleteUser(userID uint64) error
-	UpdateUserNama(userID uint64, nama string) (entity.User, error)
-	UpdateUserPassword(userID uint64, password string) (entity.User, error)
+	UpdateUserNama(userID uint64, nama string) error
+	UpdateUserPassword(userID uint64, password string) error
 }
 
 type userRepository struct {
@@ -64,22 +64,22 @@ func (ur *userRepository) DeleteUser(userID uint64) error {
 	return nil
 }
 
-func (ur *userRepository) UpdateUserNama(userID uint64, nama string) (entity.User, error) {
+func (ur *userRepository) UpdateUserNama(userID uint64, nama string) error {
 	var user entity.User
 	user.ID = userID
 	user.Nama = nama
 	if err := ur.DB.Updates(&user).Error; err != nil {
-		return entity.User{}, err
+		return err
 	}
-	return user, nil
+	return nil
 }
 
-func (ur *userRepository) UpdateUserPassword(userID uint64, password string) (entity.User, error) {
+func (ur *userRepository) UpdateUserPassword(userID uint64, password string) error {
 	var user entity.User
 	user.ID = userID
 	user.Password = password
 	if err := ur.DB.Updates(&user).Error; err != nil {
-		return entity.User{}, err
+		return err
 	}
-	return user, nil
+	return nil
 }
